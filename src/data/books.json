@@ -1,0 +1,134 @@
+[
+  {
+    "id": 1,
+    "title": "Atomic Habits",
+    "author": "James Clear",
+    "price": 299,
+    "category": "Self-Help",
+    "image": "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=600&fit=crop",
+    "description": "An Easy & Proven Way to Build Good Habits & Break Bad Ones. Tiny changes, remarkable results. No matter your goals, Atomic Habits offers a proven framework for improving every day.",
+    "rating": 4.8,
+    "pages": 320
+  },
+  {
+    "id": 2,
+    "title": "The Psychology of Money",
+    "author": "Morgan Housel",
+    "price": 349,
+    "category": "Finance",
+    "image": "https://images.unsplash.com/photo-1592496431122-2349e0fbc666?w=400&h=600&fit=crop",
+    "description": "Timeless lessons on wealth, greed, and happiness. Doing well with money isn't necessarily about what you know. It's about how you behave.",
+    "rating": 4.7,
+    "pages": 256
+  },
+  {
+    "id": 3,
+    "title": "Ikigai",
+    "author": "Héctor García & Francesc Miralles",
+    "price": 199,
+    "category": "Self-Help",
+    "image": "https://images.unsplash.com/photo-1495640452828-3df6795cf69b?w=400&h=600&fit=crop",
+    "description": "The Japanese Secret to a Long and Happy Life. A practical guide to finding your purpose and living a meaningful life.",
+    "rating": 4.6,
+    "pages": 208
+  },
+  {
+    "id": 4,
+    "title": "Deep Work",
+    "author": "Cal Newport",
+    "price": 399,
+    "category": "Productivity",
+    "image": "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&h=600&fit=crop",
+    "description": "Rules for Focused Success in a Distracted World. Professional activities performed in a state of distraction-free concentration.",
+    "rating": 4.5,
+    "pages": 304
+  },
+  {
+    "id": 5,
+    "title": "Sapiens",
+    "author": "Yuval Noah Harari",
+    "price": 449,
+    "category": "History",
+    "image": "https://images.unsplash.com/photo-1491841573634-28140fc7ced7?w=400&h=600&fit=crop",
+    "description": "A Brief History of Humankind. How did our species succeed in the battle for dominance? Why did our foraging ancestors come together to create cities and kingdoms?",
+    "rating": 4.9,
+    "pages": 464
+  },
+  {
+    "id": 6,
+    "title": "Think and Grow Rich",
+    "author": "Napoleon Hill",
+    "price": 249,
+    "category": "Business",
+    "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=600&fit=crop",
+    "description": "The landmark bestseller now revised and updated for the 21st century. Think and Grow Rich has been called the Granddaddy of All Motivational Literature.",
+    "rating": 4.7,
+    "pages": 320
+  },
+  {
+    "id": 7,
+    "title": "The Subtle Art of Not Giving a F*ck",
+    "author": "Mark Manson",
+    "price": 299,
+    "category": "Self-Help",
+    "image": "https://images.unsplash.com/photo-1519682337058-a94d519337bc?w=400&h=600&fit=crop",
+    "description": "A Counterintuitive Approach to Living a Good Life. In this generation-defining self-help guide, a superstar blogger cuts through the crap.",
+    "rating": 4.4,
+    "pages": 224
+  },
+  {
+    "id": 8,
+    "title": "Rich Dad Poor Dad",
+    "author": "Robert T. Kiyosaki",
+    "price": 349,
+    "category": "Finance",
+    "image": "https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=400&h=600&fit=crop",
+    "description": "What the Rich Teach Their Kids About Money That the Poor and Middle Class Do Not! Explodes the myth that you need to earn a high income to be rich.",
+    "rating": 4.6,
+    "pages": 336
+  },
+  {
+    "id": 9,
+    "title": "The 7 Habits of Highly Effective People",
+    "author": "Stephen R. Covey",
+    "price": 399,
+    "category": "Business",
+    "image": "https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d?w=400&h=600&fit=crop",
+    "description": "Powerful Lessons in Personal Change. This book has captivated readers for 25 years. It has transformed the lives of Presidents and CEOs.",
+    "rating": 4.8,
+    "pages": 384
+  },
+  {
+    "id": 10,
+    "title": "The Power of Now",
+    "author": "Eckhart Tolle",
+    "price": 279,
+    "category": "Spirituality",
+    "image": "https://images.unsplash.com/photo-1516414447565-b14be0adf13e?w=400&h=600&fit=crop",
+    "description": "A Guide to Spiritual Enlightenment. It's no wonder that The Power of Now has sold over 2 million copies worldwide.",
+    "rating": 4.7,
+    "pages": 236
+  },
+  {
+    "id": 11,
+    "title": "Zero to One",
+    "author": "Peter Thiel",
+    "price": 399,
+    "category": "Business",
+    "image": "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=400&h=600&fit=crop",
+    "description": "Notes on Startups, or How to Build the Future. The next Bill Gates will not build an operating system. The next Larry Page won't make a search engine.",
+    "rating": 4.5,
+    "pages": 224
+  },
+  {
+    "id": 12,
+    "title": "Can't Hurt Me",
+    "author": "David Goggins",
+    "price": 329,
+    "category": "Biography",
+    "image": "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=600&fit=crop",
+    "description": "Master Your Mind and Defy the Odds. For David Goggins, childhood was a nightmare - poverty, prejudice, and physical abuse colored his days.",
+    "rating": 4.9,
+    "pages": 366
+  }
+]
