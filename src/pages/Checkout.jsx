@@ -114,35 +114,69 @@ const Checkout = () => {
     setShowQRModal(true);
   };
 
-  const handlePaymentConfirmation = () => {
+  const handlePaymentConfirmation = async () => {
     if (!transactionId.trim()) {
       toast.error('Please enter transaction ID');
       return;
     }
 
-    toast.loading('Verifying payment...', { duration: 2000 });
+    toast.loading('Saving order...', { id: 'order-save' });
     
-    setTimeout(() => {
-      // Clear cart if checkout was from cart
-      if (!searchParams.get('bookId')) {
-        clearCart();
+    try {
+      // Create order in backend
+      const orderData = {
+        customerDetails: customerDetails,
+        books: orderItems.map(item => ({
+          book: item.id,
+          title: item.title,
+          author: item.author,
+          price: item.price,
+          quantity: item.quantity || 1,
+          image: item.image
+        })),
+        totalAmount: totalAmount,
+        paymentId: paymentDetails.orderId,
+        transactionId: transactionId,
+        status: 'pending'
+      };
+
+      const response = await fetch('https://backend-books-production-c7bc.up.railway.app/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        toast.success('Order placed successfully!', { id: 'order-save' });
+        
+        // Clear cart if checkout was from cart
+        if (!searchParams.get('bookId')) {
+          clearCart();
+        }
+        
+        // Navigate to success page
+        setTimeout(() => {
+          setShowQRModal(false);
+          navigate('/success', {
+            state: {
+              orderId: result.data?._id || paymentDetails.orderId,
+              amount: totalAmount,
+              customerDetails: customerDetails,
+              transactionId: transactionId,
+            },
+          });
+        }, 500);
+      } else {
+        toast.error(result.message || 'Failed to create order', { id: 'order-save' });
       }
-      
-      toast.success('Payment submitted for verification!');
-      
-      // Navigate to success page
-      setTimeout(() => {
-        setShowQRModal(false);
-        navigate('/success', {
-          state: {
-            orderId: paymentDetails.orderId,
-            amount: totalAmount,
-            customerDetails: customerDetails,
-            transactionId: transactionId,
-          },
-        });
-      }, 500);
-    }, 2000);
+    } catch (error) {
+      console.error('Order creation error:', error);
+      toast.error('Error creating order. Please contact support.', { id: 'order-save' });
+    }
   };
 
   if (orderItems.length === 0) {
