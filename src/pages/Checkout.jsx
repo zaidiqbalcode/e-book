@@ -96,11 +96,10 @@ const Checkout = () => {
 
     // Generate UPI payment URL and QR code
     const upiId = '6395881558@kotak811';
-    const upiName = 'ZAID IQBAL';
     const orderId = 'ORDER_' + Date.now();
     
     // UPI payment URL format
-    const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(upiName)}&am=${totalAmount}&cu=INR&tn=${encodeURIComponent('Readify Order ' + orderId)}`;
+    const upiUrl = `upi://pay?pa=${upiId}&am=${totalAmount}&cu=INR&tn=${encodeURIComponent('Readify Order ' + orderId)}`;
     
     // Generate QR code using QRServer API (no CORS issues)
     const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(upiUrl)}`;
@@ -111,7 +110,6 @@ const Checkout = () => {
       amount: totalAmount,
       qrCodeUrl: qrCodeUrl,
       upiId: upiId,
-      upiName: upiName,
     });
     setShowQRModal(true);
   };
@@ -395,7 +393,6 @@ const Checkout = () => {
                     />
                   </div>
                   <div className="mt-4 text-white">
-                    <p className="font-semibold text-lg">{paymentDetails.upiName}</p>
                     <p className="text-sm opacity-90">{paymentDetails.upiId}</p>
                   </div>
                 </div>
