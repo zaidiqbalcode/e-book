@@ -88,10 +88,6 @@ const Checkout = () => {
     return true;
   };
 
-  const [showQRModal, setShowQRModal] = useState(false);
-  const [paymentDetails, setPaymentDetails] = useState(null);
-  const [transactionId, setTransactionId] = useState('');
-
   const handlePayment = () => {
     // Validate form first
     if (!validateForm()) {
