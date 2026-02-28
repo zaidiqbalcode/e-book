@@ -94,13 +94,24 @@ const Checkout = () => {
       return;
     }
 
+    // Generate UPI payment URL and QR code
+    const upiId = '6395881558@kotak811';
+    const upiName = 'ZAID IQBAL';
+    const orderId = 'ORDER_' + Date.now();
+    
+    // UPI payment URL format
+    const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(upiName)}&am=${totalAmount}&cu=INR&tn=${encodeURIComponent('Readify Order ' + orderId)}`;
+    
+    // Generate QR code using Google Charts API
+    const qrCodeUrl = `https://chart.googleapis.com/chart?cht=qr&chl=${encodeURIComponent(upiUrl)}&chs=300x300&choe=UTF-8`;
+
     // Show UPI QR Code modal
     setPaymentDetails({
-      orderId: 'ORDER_' + Date.now(),
+      orderId: orderId,
       amount: totalAmount,
-      qrCodeUrl: 'https://raw.githubusercontent.com/zaidiqbalcode/e-book/main/backend/public/upi-qr.png',
-      upiId: '6395881558@kotak811',
-      upiName: 'ZAID IQBAL',
+      qrCodeUrl: qrCodeUrl,
+      upiId: upiId,
+      upiName: upiName,
     });
     setShowQRModal(true);
   };
