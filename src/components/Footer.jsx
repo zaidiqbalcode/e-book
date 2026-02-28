@@ -125,8 +125,8 @@ const Footer = () => {
               </a>
             </div>
             <div className="mt-6 text-gray-400 text-sm">
-              <p>Email: support@readify.com</p>
-              <p className="mt-1">Phone: +91 98765 43210</p>
+              <p>Email: Malikbismanjeetsingh@gmail.com</p>
+              <p className="mt-1">Phone: 75088 98000</p>
             </div>
           </div>
         </div>
