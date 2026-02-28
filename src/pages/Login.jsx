@@ -144,14 +144,6 @@ const Login = () => {
             >
               {isLogin ? 'Sign In' : 'Sign Up'}
             </button>
-
-            {/* Demo Notice */}
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
-              <p className="text-sm text-yellow-800 text-center">
-                <strong>Demo Mode:</strong> This is a frontend-only implementation. No
-                actual authentication occurs.
-              </p>
-            </div>
           </form>
 
           {/* Toggle Login/Register */}

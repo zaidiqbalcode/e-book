@@ -19,6 +19,9 @@ const Checkout = () => {
     state: '',
     pincode: '',
   });
+  const [showQRModal, setShowQRModal] = useState(false);
+  const [paymentDetails, setPaymentDetails] = useState(null);
+  const [transactionId, setTransactionId] = useState('');
 
   useEffect(() => {
     const bookId = searchParams.get('bookId');
@@ -85,33 +88,52 @@ const Checkout = () => {
     return true;
   };
 
+  const [showQRModal, setShowQRModal] = useState(false);
+  const [paymentDetails, setPaymentDetails] = useState(null);
+  const [transactionId, setTransactionId] = useState('');
+
   const handlePayment = () => {
     // Validate form first
     if (!validateForm()) {
       return;
     }
 
-    // Demo payment simulation
-    toast.loading('Processing payment...', { duration: 2000 });
+    // Show UPI QR Code modal
+    setPaymentDetails({
+      orderId: 'ORDER_' + Date.now(),
+      amount: totalAmount,
+      qrCodeUrl: 'https://raw.githubusercontent.com/zaidiqbalcode/e-book/main/backend/public/upi-qr.png',
+      upiId: '6395881558@kotak811',
+      upiName: 'ZAID IQBAL',
+    });
+    setShowQRModal(true);
+  };
+
+  const handlePaymentConfirmation = () => {
+    if (!transactionId.trim()) {
+      toast.error('Please enter transaction ID');
+      return;
+    }
+
+    toast.loading('Verifying payment...', { duration: 2000 });
     
     setTimeout(() => {
-      // Generate a mock order ID
-      const mockOrderId = 'RZP_' + Date.now() + Math.random().toString(36).substr(2, 9).toUpperCase();
-      
       // Clear cart if checkout was from cart
       if (!searchParams.get('bookId')) {
         clearCart();
       }
       
-      toast.success('Payment successful!');
+      toast.success('Payment submitted for verification!');
       
       // Navigate to success page
       setTimeout(() => {
+        setShowQRModal(false);
         navigate('/success', {
           state: {
-            orderId: mockOrderId,
+            orderId: paymentDetails.orderId,
             amount: totalAmount,
             customerDetails: customerDetails,
+            transactionId: transactionId,
           },
         });
       }, 500);
@@ -343,6 +365,93 @@ const Checkout = () => {
             </div>
           </div>
         </div>
+
+        {/* UPI QR Code Modal */}
+        {showQRModal && paymentDetails && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6 animate-fade-in">
+              <div className="text-center">
+                <h2 className="text-2xl font-bold text-gray-800 mb-4">
+                  Scan QR Code to Pay
+                </h2>
+                
+                {/* QR Code */}
+                <div className="bg-gradient-to-br from-pink-500 to-purple-600 p-6 rounded-xl mb-4">
+                  <div className="bg-white p-4 rounded-lg">
+                    <img
+                      src={paymentDetails.qrCodeUrl}
+                      alt="UPI QR Code"
+                      className="w-full max-w-xs mx-auto"
+                      onError={(e) => {
+                        e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2YzZjRmNiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5Y2EzYWYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5RUiBDb2RlPC90ZXh0Pjwvc3ZnPg==';
+                      }}
+                    />
+                  </div>
+                  <div className="mt-4 text-white">
+                    <p className="font-semibold text-lg">{paymentDetails.upiName}</p>
+                    <p className="text-sm opacity-90">{paymentDetails.upiId}</p>
+                  </div>
+                </div>
+
+                {/* Amount */}
+                <div className="bg-primary-50 p-4 rounded-lg mb-4">
+                  <p className="text-sm text-gray-600">Amount to Pay</p>
+                  <p className="text-3xl font-bold text-primary-600">₹{paymentDetails.amount}</p>
+                  <p className="text-xs text-gray-500 mt-1">Order ID: {paymentDetails.orderId}</p>
+                </div>
+
+                {/* Instructions */}
+                <div className="bg-gray-50 p-4 rounded-lg mb-4 text-left">
+                  <p className="text-sm font-semibold text-gray-700 mb-2">Instructions:</p>
+                  <ol className="text-xs text-gray-600 space-y-1">
+                    <li>1. Open any UPI app (Google Pay, PhonePe, Paytm)</li>
+                    <li>2. Scan the QR code above</li>
+                    <li>3. Enter amount: ₹{paymentDetails.amount}</li>
+                    <li>4. Complete the payment</li>
+                    <li>5. Copy the Transaction ID and paste below</li>
+                  </ol>
+                </div>
+
+                {/* Transaction ID Input */}
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700 mb-2 text-left">
+                    Transaction ID / UTR Number <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={transactionId}
+                    onChange={(e) => setTransactionId(e.target.value)}
+                    placeholder="Enter 12-digit transaction ID"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  />
+                </div>
+
+                {/* Buttons */}
+                <div className="flex space-x-3">
+                  <button
+                    onClick={() => {
+                      setShowQRModal(false);
+                      setTransactionId('');
+                    }}
+                    className="flex-1 bg-gray-200 text-gray-700 py-3 rounded-lg hover:bg-gray-300 transition font-medium"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handlePaymentConfirmation}
+                    className="flex-1 bg-primary-600 text-white py-3 rounded-lg hover:bg-primary-700 transition font-semibold"
+                  >
+                    Confirm Payment
+                  </button>
+                </div>
+
+                <p className="text-xs text-gray-500 mt-4">
+                  Your order will be processed after payment verification
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
