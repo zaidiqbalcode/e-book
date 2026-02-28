@@ -171,11 +171,14 @@ const Checkout = () => {
           });
         }, 500);
       } else {
+        // Show the actual error from backend
+        console.error('Backend error:', result);
         toast.error(result.message || 'Failed to create order', { id: 'order-save' });
       }
     } catch (error) {
       console.error('Order creation error:', error);
-      toast.error('Error creating order. Please contact support.', { id: 'order-save' });
+      // Show more detailed error
+      toast.error(`Error: ${error.message || 'Network error. Please check your connection.'}`, { id: 'order-save' });
     }
   };
 
