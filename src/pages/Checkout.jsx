@@ -102,8 +102,8 @@ const Checkout = () => {
     // UPI payment URL format
     const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(upiName)}&am=${totalAmount}&cu=INR&tn=${encodeURIComponent('Readify Order ' + orderId)}`;
     
-    // Generate QR code using Google Charts API
-    const qrCodeUrl = `https://chart.googleapis.com/chart?cht=qr&chl=${encodeURIComponent(upiUrl)}&chs=300x300&choe=UTF-8`;
+    // Generate QR code using QRServer API (no CORS issues)
+    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(upiUrl)}`;
 
     // Show UPI QR Code modal
     setPaymentDetails({
