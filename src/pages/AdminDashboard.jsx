@@ -39,7 +39,7 @@ const AdminDashboard = () => {
     setLoading(true);
     try {
       // Fetch dashboard stats
-      const statsResponse = await fetch('https://backend-books-production-c7bc.up.railway.app/api/admin/dashboard', {
+      const statsResponse = await fetch('https://backend-books-k4fq.onrender.com/api/admin/dashboard', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token') || 'demo-admin-token'}`,
         },
@@ -51,7 +51,7 @@ const AdminDashboard = () => {
       }
 
       // Fetch all orders
-      const ordersResponse = await fetch('https://backend-books-production-c7bc.up.railway.app/api/admin/orders', {
+      const ordersResponse = await fetch('https://backend-books-k4fq.onrender.com/api/admin/orders', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token') || 'demo-admin-token'}`,
         },
@@ -63,7 +63,7 @@ const AdminDashboard = () => {
       }
 
       // Fetch all users
-      const usersResponse = await fetch('https://backend-books-production-c7bc.up.railway.app/api/admin/users', {
+      const usersResponse = await fetch('https://backend-books-k4fq.onrender.com/api/admin/users', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token') || 'demo-admin-token'}`,
         },
@@ -82,7 +82,7 @@ const AdminDashboard = () => {
 
   const updateOrderStatus = async (orderId, newStatus) => {
     try {
-      const response = await fetch(`https://backend-books-production-c7bc.up.railway.app/api/admin/orders/${orderId}`, {
+      const response = await fetch(`https://backend-books-k4fq.onrender.com/api/admin/orders/${orderId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

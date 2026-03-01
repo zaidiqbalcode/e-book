@@ -140,7 +140,7 @@ const Checkout = () => {
         status: 'pending'
       };
 
-      const response = await fetch('https://backend-books-production-c7bc.up.railway.app/api/orders', {
+      const response = await fetch('https://backend-books-k4fq.onrender.com/api/orders', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
