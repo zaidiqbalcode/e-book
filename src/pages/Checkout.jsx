@@ -94,15 +94,12 @@ const Checkout = () => {
       return;
     }
 
-    // Generate UPI payment URL and QR code
-    const upiId = '6395881558@kotak811';
+    // Use static UPI QR code
+    const upiId = '7508898000@ptaxis';
     const orderId = 'ORDER_' + Date.now();
     
-    // UPI payment URL format
-    const upiUrl = `upi://pay?pa=${upiId}&am=${totalAmount}&cu=INR&tn=${encodeURIComponent('Readify Order ' + orderId)}`;
-    
-    // Generate QR code using QRServer API (no CORS issues)
-    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(upiUrl)}`;
+    // Use the static QR code image
+    const qrCodeUrl = '/upi-qr.png';
 
     // Show UPI QR Code modal
     setPaymentDetails({
