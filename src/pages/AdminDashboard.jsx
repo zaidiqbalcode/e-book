@@ -38,7 +38,7 @@ const AdminDashboard = () => {
   const fetchDashboardData = async () => {
     setLoading(true);
     try {
-      // Fetch dashboard stats
+      // Fetch only dashboard stats first (faster)
       const statsResponse = await fetch('https://backend-books-k4fq.onrender.com/api/admin/dashboard', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token') || 'demo-admin-token'}`,
@@ -50,8 +50,8 @@ const AdminDashboard = () => {
         setStats(statsData.data);
       }
 
-      // Fetch all orders
-      const ordersResponse = await fetch('https://backend-books-k4fq.onrender.com/api/admin/orders', {
+      // Fetch only recent 100 orders (optimized)
+      const ordersResponse = await fetch('https://backend-books-k4fq.onrender.com/api/admin/orders?limit=100', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token') || 'demo-admin-token'}`,
         },
@@ -59,24 +59,59 @@ const AdminDashboard = () => {
       
       if (ordersResponse.ok) {
         const ordersData = await ordersResponse.json();
-        setOrders(ordersData.data);
+        setOrders(ordersData.data || []);
       }
 
-      // Fetch all users
-      const usersResponse = await fetch('https://backend-books-k4fq.onrender.com/api/admin/users', {
+      // Skip users initially for speed
+      setUsers([]);
+    } catch (error) {
+      console.error('Error fetching admin data:', error);
+      toast.error('Failed to load dashboard data');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deleteOrder = async (orderId) => {
+    if (!confirm('Are you sure you want to delete this order?')) return;
+    
+    try {
+      const response = await fetch(`https://backend-books-k4fq.onrender.com/api/admin/orders/${orderId}`, {
+        method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token') || 'demo-admin-token'}`,
         },
       });
-      
-      if (usersResponse.ok) {
-        const usersData = await usersResponse.json();
-        setUsers(usersData.data);
+
+      if (response.ok) {
+        toast.success('Order deleted');
+        fetchDashboardData();
+      } else {
+        toast.error('Failed to delete order');
       }
     } catch (error) {
-      console.error('Error fetching admin data:', error);
-    } finally {
-      setLoading(false);
+      toast.error('Error deleting order');
+    }
+  };
+
+  const clearAllOrders = async () => {
+    if (!confirm('Are you sure you want to delete ALL orders? This cannot be undone!')) return;
+    
+    try {
+      const deletePromises = orders.map(order => 
+        fetch(`https://backend-books-k4fq.onrender.com/api/admin/orders/${order._id}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token') || 'demo-admin-token'}`,
+          },
+        })
+      );
+
+      await Promise.all(deletePromises);
+      toast.success('All orders cleared');
+      fetchDashboardData();
+    } catch (error) {
+      toast.error('Error clearing orders');
     }
   };
 
@@ -273,6 +308,17 @@ const AdminDashboard = () => {
           </div>
 
           <div className="p-6">
+            {/* Clear All Orders Button */}
+            {activeTab === 'orders' && orders.length > 0 && (
+              <div className="mb-4 flex justify-end">
+                <button
+                  onClick={clearAllOrders}
+                  className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition text-sm font-medium"
+                >
+                  Clear All Orders ({orders.length})
+                </button>
+              </div>
+            )}
             {/* Orders Tab */}
             {activeTab === 'orders' && (
               <div className="overflow-x-auto">
@@ -339,9 +385,10 @@ const AdminDashboard = () => {
                           {new Date(order.createdAt).toLocaleDateString()}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
-                          <button
-                            onClick={() => {
-                              const details = `
+                          <div className="flex space-x-2">
+                            <button
+                              onClick={() => {
+                                const details = `
 Order ID: ${order._id}
 Customer: ${order.customerDetails?.fullName}
 Email: ${order.customerDetails?.email}
@@ -350,13 +397,20 @@ Address: ${order.customerDetails?.address}, ${order.customerDetails?.city}
 Books: ${order.books?.map(b => b.title).join(', ')}
 Total: ₹${order.totalAmount}
 Transaction ID: ${order.transactionId}
-                              `;
-                              alert(details);
-                            }}
-                            className="text-primary-600 hover:text-primary-900"
-                          >
-                            View Details
-                          </button>
+                                `;
+                                alert(details);
+                              }}
+                              className="text-primary-600 hover:text-primary-900"
+                            >
+                              View
+                            </button>
+                            <button
+                              onClick={() => deleteOrder(order._id)}
+                              className="text-red-600 hover:text-red-900"
+                            >
+                              Delete
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))}
