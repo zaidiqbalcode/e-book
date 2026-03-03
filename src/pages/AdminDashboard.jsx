@@ -231,7 +231,7 @@ const AdminDashboard = () => {
                 </div>
                 <div className="ml-4">
                   <p className="text-sm font-medium text-gray-600">Total Orders</p>
-                  <p className="text-2xl font-bold text-gray-900">{stats.totalOrders || 0}</p>
+                  <p className="text-2xl font-bold text-gray-900">{stats.overview?.totalOrders || 0}</p>
                 </div>
               </div>
             </div>
@@ -245,7 +245,7 @@ const AdminDashboard = () => {
                 </div>
                 <div className="ml-4">
                   <p className="text-sm font-medium text-gray-600">Total Revenue</p>
-                  <p className="text-2xl font-bold text-gray-900">₹{stats.totalRevenue || 0}</p>
+                  <p className="text-2xl font-bold text-gray-900">₹{stats.overview?.totalRevenue || 0}</p>
                 </div>
               </div>
             </div>
@@ -259,7 +259,7 @@ const AdminDashboard = () => {
                 </div>
                 <div className="ml-4">
                   <p className="text-sm font-medium text-gray-600">Total Books</p>
-                  <p className="text-2xl font-bold text-gray-900">{stats.totalBooks || 0}</p>
+                  <p className="text-2xl font-bold text-gray-900">{stats.overview?.totalBooks || 0}</p>
                 </div>
               </div>
             </div>
@@ -273,7 +273,7 @@ const AdminDashboard = () => {
                 </div>
                 <div className="ml-4">
                   <p className="text-sm font-medium text-gray-600">Total Users</p>
-                  <p className="text-2xl font-bold text-gray-900">{stats.totalUsers || 0}</p>
+                  <p className="text-2xl font-bold text-gray-900">{stats.overview?.totalUsers || 0}</p>
                 </div>
               </div>
             </div>
